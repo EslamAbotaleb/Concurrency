@@ -1,7 +1,7 @@
 🧭 Learning Roadmap for Concurrency (Step-by-Step) Phase 1 – Foundation (GCD & Queues)
+![1759587710748](https://github.com/user-attachments/assets/79f75377-5f15-41b2-878d-6126c0ab71c9)
 
 Focus: Understand how work scheduling actually happens.
-![1759587710748](https://github.com/user-attachments/assets/79f75377-5f15-41b2-878d-6126c0ab71c9)
 
 🧵 Thread → What runs the work
 
