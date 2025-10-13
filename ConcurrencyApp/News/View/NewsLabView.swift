@@ -16,8 +16,6 @@ struct NewsLabView: View {
                 if viewModel.isLoading {
                     ProgressView("Loading news...")
                 }
-                
-
                 List(viewModel.articles) { article in
                     VStack(alignment: .leading, spacing: 6) {
                         Text(article.title)
