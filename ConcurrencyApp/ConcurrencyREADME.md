@@ -207,8 +207,63 @@ Think of **dispatch** as the process of assigning tasks to specific threads or q
 🪄 `DispatchGroup` (Group multiple async tasks)  
 🪄 `DispatchSemaphore` (Control access to resources)  
 
+🧩 DispatchQueue (Main / Global / Custom)    Where and how your tasks run    The road your cars (tasks) drive on
+⚙️ DispatchGroup    Coordinates multiple async tasks    A traffic signal that waits for all cars to pass
+🧩 2️⃣ DispatchGroup — The “Coordinator”
+
+A DispatchGroup doesn’t run tasks.
+Instead, it tracks a set of tasks (often from queues) and notifies you when they all finish.
+
+🧠 So:
+The tasks run on a queue.
+
+The group just watches them.
+
+You can wait (group.wait()) or get notified when all are done.
+
+✅ Use when you have multiple async tasks that need to finish before continuing.
+
+🧱 DispatchSemaphore   Controls how many tasks can run at once    A toll gate that only lets N cars through
+🎯 DispatchWorkItem    Wraps a task with control (cancel, notify)
+
 ---
 
+          ┌────────────────────────────────────────────┐
+             │               Grand Central Dispatch        │
+             └────────────────────────────────────────────┘
+                                 │
+                    ┌──────────────────────────┐
+                    │     DispatchQueue         │
+                    │ (Main, Global, Custom)    │
+                    └──────────────────────────┘
+                                 │
+                    ┌──────────────────────────┐
+                    │  DispatchWorkItem        │
+                    │ (what you dispatch)      │
+                    └──────────────────────────┘
+                                 │
+     ┌─────────────────────────────────────────────────────┐
+     │   Helpers / Coordinators / Synchronizers             │
+     │   ┌────────────────────┐  ┌────────────────────┐     │
+     │   │  DispatchGroup     │  │  DispatchSemaphore  │     │
+     │   │  (wait for all)    │  │  (limit access)     │     │
+     │   └────────────────────┘  └────────────────────┘     │
+     └─────────────────────────────────────────────────────┘
+     
+### 🧩 In SwiftUI Context
+##### DispatchQueue.main    Always update @State or UI bindings on the main thread
+##### DispatchQueue.global    Run expensive tasks in background (network, image processing)
+##### DispatchGroup    Wait for multiple async operations before updating UI
+##### DispatchSemaphore    Throttle background tasks (e.g. image downloads)
+##### DispatchWorkItem    Cancel pending delayed actions (e.g. debounce typing)
+
+### ✅ TL;DR Summary
+##### Concept    Role    You use it to…    Runs tasks?
+##### DispatchQueue    Execution context    Run work on specific thread/priority    ✅ Yes
+##### DispatchGroup    Task coordinator    Wait for multiple async tasks    ❌ No
+##### DispatchSemaphore    Synchronization tool    Control concurrency or access    ❌ No
+##### DispatchWorkItem    Task wrapper    Cancel or chain dispatched work    ✅ Yes
+     
 ### 4. ✌️ Deadlock
 A **deadlock** occurs when two or more threads are waiting for each other to release resources,  
 causing all of them to remain blocked indefinitely — the program stops progressing.
