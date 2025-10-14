@@ -198,6 +198,7 @@ A **deadlock** occurs when two or more threads are waiting for each other to rel
 🪄 OperationQueue
 🪄 SerialQueue
 🪄 ConcurrentQueue
+
 3. ✌️ Dispatch
 Think of dispatch as the process of assigning tasks to specific threads or queues.
 🪄 GCD (Grand Central Dispatch – Low Level)
@@ -206,3 +207,30 @@ Think of dispatch as the process of assigning tasks to specific threads or queue
 4. ✌️ Deadlock
 A deadlock occurs when two or more threads are waiting for each other to release resources,
 causing all of them to remain blocked indefinitely — the program stops progressing.
+
+
+### Why GCD and Operation Queues Don’t Scale for SwiftUI
+##### SwiftUI embraces a reactive programming paradigm, where the UI reacts to changes in the underlying data model. 
+##### This model thrives on a declarative approach, making it essential for concurrency mechanisms to integrate seamlessly with SwiftUI’s lifecycle and state management.
+
+### 🧩  Limitations of using GCD with SwiftUI:
+##### Lack of Cancellation Support: GCD doesn’t provide built-in mechanisms to cancel tasks, which can lead to unnecessary work if a view is dismissed before a task completes.
+##### Thread Management Overhead: Developers must manually ensure that UI updates happen on the main thread.
+##### State Synchronization Issues: Synchronizing state between threads can introduce complexity and potential bugs.
+
+
+### 🌀 Async & Await
+#### What is Async/Await?
+###### The async/await pattern, introduced in Swift 5.5 and refined in Swift 6, revolutionizes how asynchronous code is written. It allows developers to write code that appears synchronous but executes asynchronously, significantly improving readability and maintainability.
+
+#### Key components:
+
+###### Async Functions: Functions declared with the async keyword that can perform asynchronous operations.
+###### Await Keyword: Used before a call to an async function to pause the execution until that function returns, without blocking the thread.
+###### Error Handling: Combined with try and catch, async/await simplifies error propagation in asynchronous code.
+
+#### Benefits of Async/Await
+###### Improved Readability: Code reads top-down, resembling synchronous code, which simplifies understanding and maintenance.
+###### Simplified Error Handling: Errors are propagated using throw, try, and catch, eliminating nested error callbacks.
+###### Automatic Thread Handling: By default, async functions execute on the same thread unless specified, reducing the need for manual thread management.
+###### Enhanced Performance: Async/await leverages lightweight threads (coroutines), which are more efficient than managing GCD queues.
