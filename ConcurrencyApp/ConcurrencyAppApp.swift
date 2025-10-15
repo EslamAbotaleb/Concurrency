@@ -14,7 +14,9 @@ struct ConcurrencyAppApp: App {
 //            DispatchAllExamplesView()
 //            NewsLabView()
 //            JokeView()
-            TaskListView()
+//            TaskListView()
+//            HomeView()
+            LoadPostsView()
         }
     }
 }

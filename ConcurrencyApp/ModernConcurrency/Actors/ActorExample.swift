@@ -371,8 +371,39 @@ actor Settings {
         theme
     }
 }
+actor UserSettings {
+    private(set) var theme: String = "Light"
+    
+    func updateTheme(to newTheme: String) async {
+        theme = newTheme
+    }
+}
+
 
 @globalActor
 actor ImageProcessing {
     static let shared = ImageProcessing()
+}
+
+actor DataManager {
+    var data: [String] = []
+    
+     func addData(_ item: String) {
+        data.append(item)
+    }
+}
+
+actor Logger {
+    private var logs: [String] = []
+
+    nonisolated func log(_ message: String) {
+        Task { await Logger.shared.append(message) }
+    }
+
+    private func append(_ message: String) {
+        logs.append(message)
+        print("Logged:", message)
+    }
+
+    static let shared = Logger()
 }
