@@ -47,29 +47,29 @@ Focus: Debug, profile, and architect concurrency correctly.
 
 ⚙️ Concurrency Thread Queue Dispatch Deadlock Race Condition Thread Safety Synchronisation Async & Await Operation Queue Cancellation Actors Structured Concurrency Task TaskGroup MainActor GlobalActor Sendable Continuations AsyncSequence Task Priorities Task Cancellation Handling Detached Tasks Unstructured Concurrency
 
-🧩 Introduction
-Concurrency allows your app to perform multiple tasks at the same time — improving responsiveness and performance.
-Swift’s modern concurrency model (introduced in Swift 5.5) simplifies asynchronous programming using structured concurrency, async/await, and actors for data safety and thread isolation.
-🧭 How to Choose Which Concurrency to Use? It depends on the nature of the problem you're trying to solve.
+### 🧩 Introduction
+###### Concurrency allows your app to perform multiple tasks at the same time — improving responsiveness and performance.
+###### Swift’s modern concurrency model (introduced in Swift 5.5) simplifies asynchronous programming using structured concurrency, async/await, and actors for data safety and thread isolation.
+###### 🧭 How to Choose Which Concurrency to Use? It depends on the nature of the problem you're trying to solve.
 
-Scenario Recommended Approach UI Updates MainActor / Main Thread Network Calls Async & Await / Task Multiple Parallel APIs TaskGroup Shared Mutable State Actor Legacy Code GCD / OperationQueue ⚙️ Without Concurrency When your code doesn’t use concurrency:
+###### Scenario Recommended Approach UI Updates MainActor / Main Thread Network Calls Async & Await / Task Multiple Parallel APIs TaskGroup Shared Mutable State Actor Legacy Code GCD / OperationQueue ⚙️ Without Concurrency When your code doesn’t use concurrency:
 
-Operations may block the main thread The UI becomes unresponsive The user experience becomes poor 📑 Concurrency Concepts
+###### Operations may block the main thread The UI becomes unresponsive The user experience becomes poor 📑 Concurrency Concepts
 
-1. ✌️ Thread
-Smallest of unit execution in a process
-When you think of a thread, think of:
-🪄 Main Thread: Handles UI updates
-🪄 Background Thread: Handles long-running or blocking tasks
-Thread LifeCycle (Create -> Ready -> Running -> Blocked -> Terminated)
-Thread sync to ensures safe access to shared resources
-Thread pool not available in swift but in GCD can manage to thread pool through (🔹 Dispatch Queues), and from this give me
-Thread pool give me better chance for to prevent any create || destroy into threads
-Global background with thread pools
-tools to synchronize threads in Swift :- ⚽️ DispatchSemaphore ⚽️ DispatchBarrier ⚽️ NSLock, NSRecursiveLock ⚽️ Actors (modern Swift)
-2. ✌️ Queue
-A queue is a collection of tasks (or operations) executed in a specific order.
-B queue data structures manage task execution order in concurrency. Main (Queues are the foundation of Grand Central Dispatch (GCD) and Operation Queues in iOS concurrency)
+### 1. ✌️ Thread
+###### Smallest of unit execution in a process
+###### When you think of a thread, think of:
+###### 🪄 Main Thread: Handles UI updates
+###### 🪄 Background Thread: Handles long-running or blocking tasks
+###### Thread LifeCycle (Create -> Ready -> Running -> Blocked -> Terminated)
+###### Thread sync to ensures safe access to shared resources
+###### Thread pool not available in swift but in GCD can manage to thread pool through (🔹 Dispatch Queues), and from this give me
+###### Thread pool give me better chance for to prevent any create || destroy into threads
+###### Global background with thread pools
+###### tools to synchronize threads in Swift :- ⚽️ DispatchSemaphore ⚽️ DispatchBarrier ⚽️ NSLock, NSRecursiveLock ⚽️ Actors (modern Swift)
+### 2. ✌️ Queue
+###### A queue is a collection of tasks (or operations) executed in a specific order.
+###### B queue data structures manage task execution order in concurrency. Main (Queues are the foundation of Grand Central Dispatch (GCD) and Operation Queues in iOS concurrency)
 ### 🧩 What is a Queue?
 A queue:
 Stores blocks of work (called tasks or operations). Decides when and how many tasks to execute at once. Helps manage background processing and avoid blocking the main thread.
