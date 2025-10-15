@@ -56,14 +56,13 @@ actor BankAccount {
  
      */
     func withdraw(_ amount: Int) async {
-           // Snapshot للحالة الحالية
+           // Snapshot
            let currentBalance = balance
 
            if currentBalance >= amount {
                print("✅ Enough balance. Processing withdrawal...")
                await Task.sleep( 2_000_000_000)
 
-               // تحقق تاني بعد الانتظار
                if balance >= amount {
                    balance -= amount
                    print("💸 Withdrawn \(amount). Balance = \(balance)")
@@ -150,7 +149,7 @@ actor ChildActor {
 
          await Task.sleep(2_000_000_000)
 
-         // recheck بعد الانتظار
+         // recheck 
          guard balance >= amount else {
              throw NSError(domain: "Balance changed while waiting", code: 1)
          }
