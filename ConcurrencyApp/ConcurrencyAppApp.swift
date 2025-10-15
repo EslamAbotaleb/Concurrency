@@ -13,7 +13,8 @@ struct ConcurrencyAppApp: App {
         WindowGroup {
 //            DispatchAllExamplesView()
 //            NewsLabView()
-            JokeView()
+//            JokeView()
+            TaskListView()
         }
     }
 }

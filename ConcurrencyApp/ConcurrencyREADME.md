@@ -234,3 +234,36 @@ causing all of them to remain blocked indefinitely — the program stops progres
 ###### Simplified Error Handling: Errors are propagated using throw, try, and catch, eliminating nested error callbacks.
 ###### Automatic Thread Handling: By default, async functions execute on the same thread unless specified, reducing the need for manual thread management.
 ###### Enhanced Performance: Async/await leverages lightweight threads (coroutines), which are more efficient than managing GCD queues.
+
+### 🌀 Actors: Simplified State Management in SwiftUI
+#### What are Actors?
+###### Actors are a new reference type in Swift 6 designed to protect mutable state in concurrent environments. They ensure that only one task can access an actor’s mutable state at a time, effectively preventing data races and ensuring thread safety without manual synchronization.
+
+#### Key features:
+###### Isolation: Actors guarantee that their mutable state is only accessed from one thread at a time.
+###### Reference Semantics: Like classes, actors are reference types.
+###### Asynchronous Methods: Accessing an actor’s properties or methods can be asynchronous.
+
+######
+| Concept        | Type                | Runs On                 | Used For             | `await` Needed?         | Analogy                             |
+| -------------- | ------------------- | ----------------------- | -------------------- | ----------------------- | ----------------------------------- |
+| `actor`        | Instance            | Private queue per actor | Protect shared state | ✅ Yes (from outside)    | “Thread-safe object”                |
+| `@MainActor`   | Global actor        | Main thread             | UI updates           | ✅ Yes (from background) | “UI-only lane”                      |
+| `@GlobalActor` | Custom global actor | Your custom queue       | Shared subsystems    | ✅ Yes (from outside)    | “Shared highway for specific tasks” |
+
+
+ ┌────────────────────────────┐
+ │         MainActor          │
+ │ (Main thread - UI updates) │
+ └──────────────┬─────────────┘
+                │
+                │
+ ┌──────────────┴─────────────┐
+ │        Your Code            │
+ │ ┌────────────────────────┐ │
+ │ │  actor CacheActor      │ │   → isolates in its own queue
+ │ └────────────────────────┘ │
+ │ ┌────────────────────────┐ │
+ │ │  @GlobalActor Database │ │   → shared for all DB ops
+ │ └────────────────────────┘ │
+ └────────────────────────────┘
